@@ -9,52 +9,41 @@
 	// Prefix all relative URLs with /admin.
 	function url_needs_prefix (url)
 	{
-		return (url && url.indexOf('/') == 0 && url.indexOf('/admin') == -1);
+		if (url && url.indexOf('/') == 0 && url.indexOf('/admin') == -1)
+		{
+			url = '/admin'+url;
+		}
+		return url;
 	}
 	$('a').each(function ()
 	{
-		var href = this.getAttribute('href');
-		
-		if (url_needs_prefix(href))
-		{
-			this.href = '/admin'+href;
-		}
+		var url = this.getAttribute('href');
+		this.href = url_needs_prefix(url);
 	});
 	$('form').each(function ()
 	{
-		var action = this.getAttribute('action');
-		
-		if (url_needs_prefix(action))
-		{
-			this.action = '/admin'+action;
-		}
+		var url = this.getAttribute('action');
+		this.action = url_needs_prefix(url);
+	});
+	$('#search').each(function ()
+	{
+		this.action = '/admin';
 	});
 	$('#list, #info').each(function ()
 	{
 		var url = $(this).data('url');
-		
-		if (url_needs_prefix(url))
-		{
-			$(this).data('url', '/admin'+url);
-		}
+		$(this).data('url', url_needs_prefix(url));
 	});
 	$('.field .image').each(function ()
 	{
 		var url = $(this).data('upload');
-		
-		if (url_needs_prefix(url))
-		{
-			$(this).data('upload', '/admin'+url);
-		}
+		$(this).data('upload', url_needs_prefix(url));
 	});
 	$('.view-link').each(function ()
 	{
-		var href = $(this).data('href');
-		
-		if (url_needs_prefix(href))
-		{
-			$(this).data('href', '/admin'+href);
-		}
+		var url = $(this).data('href');
+		$(this).data('href', url_needs_prefix(url));
 	});
+	$('#search input.query')
 
 </script>
